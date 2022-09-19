@@ -6,6 +6,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from .permitions import OnlyOwnObjects
 from .models import Link
 from .serializers import LinkSerializer
 
@@ -18,7 +19,10 @@ class LinkListCreateAPIView(generics.ListCreateAPIView):
     def get_queryset(self):
         return Link.objects.filter(user_id=self.request.user.id)
     
-
+class LinkRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Link.objects.all()
+    serializer_class = LinkSerializer
+    permission_classes = [OnlyOwnObjects]
 
 class RedirectView(View):
     def get(self, request, user_id, path):
