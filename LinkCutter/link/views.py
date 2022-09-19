@@ -1,24 +1,24 @@
+from urllib import request
 from django.shortcuts import get_object_or_404, redirect
 from django.views import View
+from .serializers import LinkSerializer
 from rest_framework.viewsets import ModelViewSet
+from rest_framework import generics
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from .models import Link
 from .serializers import LinkSerializer
 
 
-class LinkAPIViewSet(ModelViewSet):
+class LinkListCreateAPIView(generics.ListCreateAPIView):
     queryset = Link.objects.all()
     serializer_class = LinkSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         return Link.objects.filter(user_id=self.request.user.id)
+    
 
-    def create(self, request):
-        Link.objects.create(
-            name=request.name,
-            raw_url=request.raw_url,
-            truncated_url=request.truncated_url,
-            user=request.user,
-        )
 
 class RedirectView(View):
     def get(self, request, user_id, path):
