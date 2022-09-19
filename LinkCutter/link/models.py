@@ -1,5 +1,5 @@
 from django.db import models
-from django.conf import Settings
+from app import settings
 from django.contrib.auth.models import User
 
 
@@ -21,8 +21,8 @@ class Link(models.Model):
         self.transition += 1
 
     def _generate_success_url(self):
-        self.success_url = f"{Settings.SITE_URL}/{self.truncated_url}"
+        self.success_url = f"{settings.DOMAIN_URL}{self.user.id}/{self.truncated_url}"
 
     def __str__(self):
-        return f"{self.name}"
+        return self.name
 
