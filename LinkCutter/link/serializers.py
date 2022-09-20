@@ -7,9 +7,6 @@ class LinkSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     success_url = serializers.ReadOnlyField()
 
-    def update(self, instance, validated_data):
-        return super().update(instance, validated_data)
-
     class Meta:
         model = Link
         fields = '__all__'
