@@ -1,13 +1,11 @@
 from django.shortcuts import get_object_or_404, redirect
-from django.views import View
-from .serializers import LinkSerializer
-from rest_framework.viewsets import ModelViewSet
-from rest_framework import generics
-from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from .permitions import OnlyOwnObjects
-from .models import Link
 from .serializers import LinkSerializer
+from .permitions import OnlyOwnObjects
+from .serializers import LinkSerializer
+from rest_framework import generics
+from django.views import View
+from .models import Link
 
 
 class LinkListCreateAPIView(generics.ListCreateAPIView):
